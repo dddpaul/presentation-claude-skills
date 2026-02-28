@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      html { background: #1C2833; }
+      body {
+        width: 720pt; height: 405pt; margin: 0; padding: 0;
+        background: #1C2833;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+      }
+      .header-bar {
+        background: #17A2B8;
+        padding: 10pt 24pt;
+      }
+      .header-bar h1 {
+        color: #FFFFFF; font-size: 22pt; margin: 0;
+      }
+      .main {
+        display: flex;
+        flex: 1;
+        padding: 16pt 24pt 12pt 24pt;
+      }
+      .left {
+        width: 310pt;
+        padding-right: 20pt;
+      }
+      .left h2 {
+        color: #17A2B8; font-size: 14pt; margin: 0 0 10pt 0;
+      }
+      .left ul {
+        margin: 0; padding: 0 0 0 16pt;
+        color: #AAB7B8; font-size: 11pt; line-height: 1.7;
+      }
+      .left li { margin-bottom: 4pt; }
+      .right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding-top: 4pt;
+      }
+      .topic-label p {
+        color: #F39C12; font-size: 13pt; margin: 0 0 10pt 0;
+        font-weight: bold;
+      }
+      .partition {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10pt;
+      }
+      .partition-label p {
+        color: #AAB7B8; font-size: 9pt; margin: 0;
+        width: 64pt;
+      }
+      .partition-bar {
+        display: flex;
+        flex: 1;
+        height: 26pt;
+        border-radius: 4pt;
+        overflow: hidden;
+      }
+      .seg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-right: 1pt solid #1C2833;
+      }
+      .seg p {
+        color: #FFFFFF; font-size: 8pt; margin: 0;
+      }
+      .p0 .seg { background: #17A2B8; }
+      .p1 .seg { background: #2E86C1; }
+      .p2 .seg { background: #1ABC9C; }
+      .consumer-assign {
+        display: flex;
+        margin-top: 2pt;
+        padding-left: 64pt;
+      }
+      .assign-label p {
+        color: #58D68D; font-size: 8pt; margin: 0;
+        width: 80pt;
+        text-align: center;
+      }
+      .assign-spacer {
+        width: 64pt;
+      }
+      .divider {
+        width: 100%;
+        height: 1pt;
+        background: #2E4053;
+        margin: 12pt 0;
+      }
+      .summary-row {
+        display: flex;
+        gap: 16pt;
+        justify-content: center;
+        margin-top: 4pt;
+      }
+      .stat-box {
+        background: #2E4053;
+        border-radius: 6pt;
+        padding: 8pt 16pt;
+        text-align: center;
+        border-left: 3pt solid #F39C12;
+      }
+      .stat-box h3 {
+        color: #F39C12; font-size: 18pt; margin: 0;
+      }
+      .stat-box p {
+        color: #AAB7B8; font-size: 9pt; margin: 3pt 0 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header-bar">
+      <h1>Topics &amp; Partitions</h1>
+    </div>
+    <div class="main">
+      <div class="left">
+        <h2>How It Works</h2>
+        <ul>
+          <li>Topics are logical channels for events</li>
+          <li>Partitions enable parallel processing</li>
+          <li>Each partition is an ordered, append-only log</li>
+          <li>Consumer group members each read distinct partitions</li>
+        </ul>
+      </div>
+      <div class="right">
+        <div class="topic-label"><p>Topic: orders</p></div>
+
+        <!-- Partition 0 -->
+        <div class="partition">
+          <div class="partition-label"><p>Partition 0</p></div>
+          <div class="partition-bar p0">
+            <div class="seg" style="width: 20%;"><p>0</p></div>
+            <div class="seg" style="width: 20%;"><p>1</p></div>
+            <div class="seg" style="width: 20%;"><p>2</p></div>
+            <div class="seg" style="width: 20%;"><p>3</p></div>
+            <div class="seg" style="width: 20%;"><p>4</p></div>
+          </div>
+        </div>
+        <!-- Partition 1 -->
+        <div class="partition">
+          <div class="partition-label"><p>Partition 1</p></div>
+          <div class="partition-bar p1">
+            <div class="seg" style="width: 20%;"><p>0</p></div>
+            <div class="seg" style="width: 20%;"><p>1</p></div>
+            <div class="seg" style="width: 20%;"><p>2</p></div>
+            <div class="seg" style="width: 20%;"><p>3</p></div>
+            <div class="seg" style="width: 20%;"><p>4</p></div>
+          </div>
+        </div>
+        <!-- Partition 2 -->
+        <div class="partition">
+          <div class="partition-label"><p>Partition 2</p></div>
+          <div class="partition-bar p2">
+            <div class="seg" style="width: 20%;"><p>0</p></div>
+            <div class="seg" style="width: 20%;"><p>1</p></div>
+            <div class="seg" style="width: 20%;"><p>2</p></div>
+            <div class="seg" style="width: 20%;"><p>3</p></div>
+            <div class="seg" style="width: 20%;"><p>4</p></div>
+          </div>
+        </div>
+
+        <!-- Consumer assignments -->
+        <div class="consumer-assign">
+          <div class="assign-label"><p>&#8593; Consumer 1</p></div>
+          <div class="assign-label"><p>&#8593; Consumer 2</p></div>
+          <div class="assign-label"><p>&#8593; Consumer 3</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="summary-row">
+      <div class="stat-box">
+        <h3>3</h3>
+        <p>Partitions</p>
+      </div>
+      <div class="stat-box">
+        <h3>3</h3>
+        <p>Consumers</p>
+      </div>
+      <div class="stat-box">
+        <h3>1:1</h3>
+        <p>Mapping</p>
+      </div>
+    </div>
+  </body>
+</html>

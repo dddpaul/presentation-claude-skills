@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      html { background: #1C2833; }
+      body {
+        width: 720pt; height: 405pt; margin: 0; padding: 0;
+        background: #1C2833;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+      }
+      .header-bar {
+        background: #17A2B8;
+        padding: 10pt 24pt;
+      }
+      .header-bar h1 {
+        color: #FFFFFF; font-size: 22pt; margin: 0;
+      }
+      .main {
+        display: flex;
+        flex: 1;
+        padding: 14pt 20pt 10pt 20pt;
+      }
+      .left {
+        width: 250pt;
+        padding-right: 16pt;
+      }
+      .left h2 {
+        color: #17A2B8; font-size: 14pt; margin: 0 0 8pt 0;
+      }
+      .left ul {
+        margin: 0; padding: 0 0 0 16pt;
+        color: #AAB7B8; font-size: 10.5pt; line-height: 1.6;
+      }
+      .left li { margin-bottom: 4pt; }
+      .right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 2pt;
+      }
+      /* Diagram components */
+      .row {
+        display: flex;
+        justify-content: center;
+        gap: 14pt;
+        margin-bottom: 4pt;
+      }
+      .box {
+        padding: 7pt 12pt;
+        border-radius: 5pt;
+        text-align: center;
+      }
+      .box p { margin: 0; font-size: 9pt; }
+      .producer { background: #2E4053; border: 1.5pt solid #17A2B8; }
+      .producer p { color: #17A2B8; }
+      .broker { background: #2E4053; border: 1.5pt solid #F39C12; }
+      .broker p { color: #F39C12; }
+      .consumer { background: #2E4053; border: 1.5pt solid #58D68D; }
+      .consumer p { color: #58D68D; }
+      .zk { background: #2E4053; border: 1.5pt solid #AAB7B8; }
+      .zk p { color: #AAB7B8; }
+      .arrow-down {
+        display: flex; justify-content: center; margin: 2pt 0;
+      }
+      .arrow-down p {
+        color: #AAB7B8; font-size: 16pt; margin: 0; line-height: 1;
+      }
+      .broker-cluster {
+        background: #1A252F;
+        border: 1.5pt solid #F39C12;
+        border-radius: 8pt;
+        padding: 10pt 14pt;
+        margin: 0;
+      }
+      .broker-label p {
+        color: #F39C12; font-size: 8pt; margin: 0 0 6pt 0;
+        text-align: center;
+      }
+      .broker-row {
+        display: flex;
+        gap: 10pt;
+        justify-content: center;
+      }
+      .repl-arrow {
+        display: flex; align-items: center;
+      }
+      .repl-arrow p {
+        color: #F39C12; font-size: 12pt; margin: 0;
+      }
+      .side-conn {
+        display: flex;
+        align-items: center;
+        gap: 6pt;
+        margin-top: 4pt;
+      }
+      .side-conn p {
+        color: #AAB7B8; font-size: 10pt; margin: 0;
+      }
+      .cluster-zk-row {
+        display: flex;
+        align-items: center;
+        gap: 10pt;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header-bar">
+      <h1>Core Architecture</h1>
+    </div>
+    <div class="main">
+      <div class="left">
+        <h2>Key Concepts</h2>
+        <ul>
+          <li>Producers publish records to topic partitions</li>
+          <li>Broker cluster stores and replicates data</li>
+          <li>Consumer groups read partitions in parallel</li>
+          <li>ZooKeeper / KRaft handles coordination</li>
+        </ul>
+      </div>
+      <div class="right">
+        <!-- Producers -->
+        <div class="row">
+          <div class="box producer"><p>Producer A</p></div>
+          <div class="box producer"><p>Producer B</p></div>
+          <div class="box producer"><p>Producer C</p></div>
+        </div>
+        <div class="arrow-down"><p>&#9660; &#9660; &#9660;</p></div>
+
+        <!-- Broker Cluster -->
+        <div class="cluster-zk-row">
+          <div class="broker-cluster">
+            <div class="broker-label"><p>Broker Cluster</p></div>
+            <div class="broker-row">
+              <div class="box broker"><p>Broker 1</p></div>
+              <div class="repl-arrow"><p>&#8644;</p></div>
+              <div class="box broker"><p>Broker 2</p></div>
+              <div class="repl-arrow"><p>&#8644;</p></div>
+              <div class="box broker"><p>Broker 3</p></div>
+            </div>
+          </div>
+          <div class="side-conn">
+            <p>&#8596;</p>
+            <div class="box zk"><p>ZooKeeper<br/>/ KRaft</p></div>
+          </div>
+        </div>
+
+        <div class="arrow-down"><p>&#9660; &#9660; &#9660;</p></div>
+        <!-- Consumers -->
+        <div class="row">
+          <div class="box consumer"><p>Consumer 1</p></div>
+          <div class="box consumer"><p>Consumer 2</p></div>
+          <div class="box consumer"><p>Consumer 3</p></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
