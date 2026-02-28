@@ -14,9 +14,10 @@ By prompting [Claude.ai](https://claude.ai):
 
 | Skill | Description |
 |-------|-------------|
+| **pptx-new** | PowerPoint presentations — PptxGenJS-based creation, direct XML editing, uv/venv-friendly. From [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/pptx). **Recommended over pptx.** |
+| **pptx** | PowerPoint presentations (legacy) — OOXML schemas, html2pptx converter, inventory/replace pipeline |
 | **docx** | Word documents — OOXML schemas, docx-js reference, Python scripts for comments/utilities, pack/unpack/validate tooling |
 | **pdf** | PDF files — form field extraction/filling, bounding box validation, PDF-to-image conversion, fillable form support |
-| **pptx** | PowerPoint presentations — OOXML schemas, html2pptx converter, presentation-specific reference |
 | **xlsx** | Excel spreadsheets |
 
 ## Repository Structure
@@ -29,7 +30,8 @@ By prompting [Claude.ai](https://claude.ai):
 └── mnt/skills/public/     # Extracted skills
     ├── docx/
     ├── pdf/
-    ├── pptx/
+    ├── pptx/              # Legacy (from Claude.ai sandbox)
+    ├── pptx-new/          # Recommended (from anthropics/skills repo)
     └── xlsx/
 ```
 
