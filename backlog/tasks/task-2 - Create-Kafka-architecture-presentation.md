@@ -1,10 +1,11 @@
 ---
 id: TASK-2
 title: Create Kafka architecture presentation
-status: To Do
-assignee: []
+status: Done
+assignee:
+  - '@claude'
 created_date: '2026-02-28 10:14'
-updated_date: '2026-02-28 10:21'
+updated_date: '2026-02-28 11:51'
 labels: []
 dependencies: []
 ---
@@ -65,8 +66,16 @@ Two-column layout (50/50):
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Presentation has 2-3 slides covering Kafka architecture
-- [ ] #2 Slides include both text content and diagrams
-- [ ] #3 All Python scripts invoked via uv run
-- [ ] #4 Output .pptx file opens correctly
+- [x] #1 Presentation has 2-3 slides covering Kafka architecture
+- [x] #2 Slides include both text content and diagrams
+- [x] #3 All Python scripts invoked via uv run
+- [x] #4 Output .pptx file opens correctly
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Commit: `1faeb46` - task-2: Kafka architecture presentation with 3 slides
+
+Implemented 3-slide Kafka architecture presentation using PptxGenJS directly (html2pptx unavailable due to missing Playwright system deps). Charcoal & teal color scheme. Slides: title, core architecture diagram, topics & partitions detail. HTML slide templates also included as reference. Build with: NODE_PATH=$(npm root -g) node kafka-presentation/build.js
+<!-- SECTION:NOTES:END -->
