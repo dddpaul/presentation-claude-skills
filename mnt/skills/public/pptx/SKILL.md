@@ -17,7 +17,7 @@ To read just the text content of a presentation, convert the document to markdow
 
 ```bash
 # Convert document to markdown
-python -m markitdown path-to-file.pptx
+uv run --with "markitdown[pptx]" python -m markitdown path-to-file.pptx
 ```
 
 ### Raw XML access
@@ -26,7 +26,7 @@ Use raw XML access for: comments, speaker notes, slide layouts, animations, desi
 
 #### Unpacking a file
 
-`python ooxml/scripts/unpack.py <office_file> <output_dir>`
+`uv run ooxml/scripts/unpack.py <office_file> <output_dir>`
 
 **Note**: The unpack.py script is located at `skills/pptx/ooxml/scripts/unpack.py` relative to the project root. If the script doesn't exist at this path, use `find . -name "unpack.py"` to locate it.
 
@@ -178,7 +178,7 @@ When creating a new PowerPoint presentation from scratch, use the **html2pptx** 
    - Add charts and tables to placeholder areas using PptxGenJS API
    - Save the presentation using `pptx.writeFile()`
 5. **Visual validation**: Generate thumbnails and inspect for layout issues
-   - Create thumbnail grid: `python scripts/thumbnail.py output.pptx workspace/thumbnails --cols 4`
+   - Create thumbnail grid: `uv run scripts/thumbnail.py output.pptx workspace/thumbnails --cols 4`
    - Read and carefully examine the thumbnail image for:
      - **Text cutoff**: Text being cut off by header bars, shapes, or slide edges
      - **Text overlap**: Text overlapping with other text or shapes
@@ -194,10 +194,10 @@ To edit slides in an existing PowerPoint presentation, work with the raw Office 
 ### Workflow
 
 1. **MANDATORY - READ ENTIRE FILE**: Read [`ooxml.md`](ooxml.md) (~500 lines) completely from start to finish. **NEVER set any range limits when reading this file.** Read the full file content for detailed guidance on OOXML structure and editing workflows before any presentation editing.
-2. Unpack the presentation: `python ooxml/scripts/unpack.py <office_file> <output_dir>`
+2. Unpack the presentation: `uv run ooxml/scripts/unpack.py <office_file> <output_dir>`
 3. Edit the XML files (primarily `ppt/slides/slide{N}.xml` and related files)
-4. **CRITICAL**: Validate immediately after each edit and fix any validation errors before proceeding: `python ooxml/scripts/validate.py <dir> --original <file>`
-5. Pack the final presentation: `python ooxml/scripts/pack.py <input_directory> <office_file>`
+4. **CRITICAL**: Validate immediately after each edit and fix any validation errors before proceeding: `uv run ooxml/scripts/validate.py <dir> --original <file>`
+5. Pack the final presentation: `uv run ooxml/scripts/pack.py <input_directory> <office_file>`
 
 ## Creating a new PowerPoint presentation **using a template**
 
@@ -207,9 +207,9 @@ To create a presentation that follows an existing template's design, duplicate a
 
 1. **Extract template text AND create visual thumbnail grid**:
 
-   - Extract text: `python -m markitdown template.pptx > template-content.md`
+   - Extract text: `uv run --with "markitdown[pptx]" python -m markitdown template.pptx > template-content.md`
    - Read `template-content.md`: Read the entire file to understand the contents of the template presentation. **NEVER set any range limits when reading this file.**
-   - Create thumbnail grids: `python scripts/thumbnail.py template.pptx`
+   - Create thumbnail grids: `uv run scripts/thumbnail.py template.pptx`
    - See [Creating Thumbnail Grids](#creating-thumbnail-grids) section for more details
 
 2. **Analyze template and save inventory to a file**:
@@ -274,7 +274,7 @@ To create a presentation that follows an existing template's design, duplicate a
 
    - Use the `scripts/rearrange.py` script to create a new presentation with slides in the desired order:
      ```bash
-     python scripts/rearrange.py template.pptx working.pptx 0,34,34,50,52
+     uv run scripts/rearrange.py template.pptx working.pptx 0,34,34,50,52
      ```
    - The script handles duplicating repeated slides, deleting unused slides, and reordering automatically
    - Slide indices are 0-based (first slide is 0, second is 1, etc.)
@@ -284,7 +284,7 @@ To create a presentation that follows an existing template's design, duplicate a
 
    - **Run inventory extraction**:
      ```bash
-     python scripts/inventory.py working.pptx text-inventory.json
+     uv run scripts/inventory.py working.pptx text-inventory.json
      ```
    - **Read text-inventory.json**: Read the entire text-inventory.json file to understand all shapes and their properties. **NEVER set any range limits when reading this file.**
 
@@ -417,7 +417,7 @@ To create a presentation that follows an existing template's design, duplicate a
 7. **Apply replacements using the `replace.py` script**
 
    ```bash
-   python scripts/replace.py working.pptx replacement-text.json output.pptx
+   uv run scripts/replace.py working.pptx replacement-text.json output.pptx
    ```
 
    The script will:
@@ -448,14 +448,14 @@ To create a presentation that follows an existing template's design, duplicate a
 To create visual thumbnail grids of PowerPoint slides for quick analysis and reference:
 
 ```bash
-python scripts/thumbnail.py template.pptx [output_prefix]
+uv run scripts/thumbnail.py template.pptx [output_prefix]
 ```
 
 **Features**:
 
 - Creates: `thumbnails.jpg` (or `thumbnails-1.jpg`, `thumbnails-2.jpg`, etc. for large decks)
 - Default: 5 columns, max 30 slides per grid (5×6)
-- Custom prefix: `python scripts/thumbnail.py template.pptx my-grid`
+- Custom prefix: `uv run scripts/thumbnail.py template.pptx my-grid`
   - Note: The output prefix should include the path if you want output in a specific directory (e.g., `workspace/my-grid`)
 - Adjust columns: `--cols 4` (range: 3-6, affects slides per grid)
 - Grid limits: 3 cols = 12 slides/grid, 4 cols = 20, 5 cols = 30, 6 cols = 42
@@ -472,10 +472,10 @@ python scripts/thumbnail.py template.pptx [output_prefix]
 
 ```bash
 # Basic usage
-python scripts/thumbnail.py presentation.pptx
+uv run scripts/thumbnail.py presentation.pptx
 
 # Combine options: custom name, columns
-python scripts/thumbnail.py template.pptx analysis --cols 4
+uv run scripts/thumbnail.py template.pptx analysis --cols 4
 ```
 
 ## Converting Slides to Images
@@ -518,13 +518,21 @@ pdftoppm -jpeg -r 150 -f 2 -l 5 template.pdf slide  # Converts only pages 2-5
 
 ## Dependencies
 
-Required dependencies (should already be installed):
+### Python (managed via PEP 723 inline metadata)
 
-- **markitdown**: `pip install "markitdown[pptx]"` (for text extraction from presentations)
+Python dependencies are declared in each script's inline metadata. Running any script with `uv run` automatically installs its dependencies in a cached virtual environment — no manual `pip install` needed.
+
+- **markitdown**: `uv run --with "markitdown[pptx]" python -m markitdown file.pptx`
+- **python-pptx**, **Pillow**, **defusedxml**, **lxml**: declared per-script, auto-installed by `uv run`
+
+### Node.js (global install)
+
 - **pptxgenjs**: `npm install -g pptxgenjs` (for creating presentations via html2pptx)
 - **playwright**: `npm install -g playwright` (for HTML rendering in html2pptx)
 - **react-icons**: `npm install -g react-icons react react-dom` (for icons)
 - **sharp**: `npm install -g sharp` (for SVG rasterization and image processing)
-- **LibreOffice**: `sudo apt-get install libreoffice` (for PDF conversion)
-- **Poppler**: `sudo apt-get install poppler-utils` (for pdftoppm to convert PDF to images)
-- **defusedxml**: `pip install defusedxml` (for secure XML parsing)
+
+### System tools
+
+- **LibreOffice**: `brew install libreoffice` / `sudo apt-get install libreoffice` (for PDF conversion)
+- **Poppler**: `brew install poppler` / `sudo apt-get install poppler-utils` (for pdftoppm)

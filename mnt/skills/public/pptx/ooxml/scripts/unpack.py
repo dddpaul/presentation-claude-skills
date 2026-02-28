@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["defusedxml"]
+# ///
 """Unpack and format XML contents of Office files (.docx, .pptx, .xlsx)"""
 
 import random

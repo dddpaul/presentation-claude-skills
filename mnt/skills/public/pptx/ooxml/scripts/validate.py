@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["lxml", "defusedxml"]
+# ///
 """
 Command line tool to validate Office document XML files against XSD schemas and tracked changes.
 
 Usage:
-    python validate.py <dir> --original <original_file>
+    uv run validate.py <dir> --original <original_file>
 """
 
 import argparse
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from validation import DOCXSchemaValidator, PPTXSchemaValidator, RedliningValidator
 
 

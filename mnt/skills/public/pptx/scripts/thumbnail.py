@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["python-pptx", "Pillow"]
+# ///
 """
 Create thumbnail grids from PowerPoint presentation slides.
 
@@ -19,16 +23,16 @@ Grid limits by column count:
 - 6 cols: max 42 slides per grid (6×7)
 
 Usage:
-    python thumbnail.py input.pptx [output_prefix] [--cols N] [--outline-placeholders]
+    uv run thumbnail.py input.pptx [output_prefix] [--cols N] [--outline-placeholders]
 
 Examples:
-    python thumbnail.py presentation.pptx
+    uv run thumbnail.py presentation.pptx
     # Creates: thumbnails.jpg (using default prefix)
     # Outputs:
     #   Created 1 grid(s):
     #     - thumbnails.jpg
 
-    python thumbnail.py large-deck.pptx grid --cols 4
+    uv run thumbnail.py large-deck.pptx grid --cols 4
     # Creates: grid-1.jpg, grid-2.jpg, grid-3.jpg
     # Outputs:
     #   Created 3 grid(s):
@@ -36,7 +40,7 @@ Examples:
     #     - grid-2.jpg
     #     - grid-3.jpg
 
-    python thumbnail.py template.pptx analysis --outline-placeholders
+    uv run thumbnail.py template.pptx analysis --outline-placeholders
     # Creates thumbnail grids with red outlines around text placeholders
 """
 
@@ -46,6 +50,7 @@ import sys
 import tempfile
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from inventory import extract_text_inventory
 from PIL import Image, ImageDraw, ImageFont
 from pptx import Presentation

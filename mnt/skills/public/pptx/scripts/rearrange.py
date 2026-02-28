@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["python-pptx"]
+# ///
 """
 Rearrange PowerPoint slides based on a sequence of indices.
 
 Usage:
-    python rearrange.py template.pptx output.pptx 0,34,34,50,52
+    uv run rearrange.py template.pptx output.pptx 0,34,34,50,52
 
 This will create output.pptx using slides from template.pptx in the specified order.
 Slides can be repeated (e.g., 34 appears twice).
@@ -15,7 +19,6 @@ import sys
 from copy import deepcopy
 from pathlib import Path
 
-import six
 from pptx import Presentation
 
 
@@ -81,7 +84,7 @@ def duplicate_slide(pres, index):
 
     # Collect all image and media relationships from the source slide
     image_rels = {}
-    for rel_id, rel in six.iteritems(source.part.rels):
+    for rel_id, rel in source.part.rels.items():
         if "image" in rel.reltype or "media" in rel.reltype:
             image_rels[rel_id] = rel
 

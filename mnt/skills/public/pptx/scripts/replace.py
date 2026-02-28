@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["python-pptx", "Pillow"]
+# ///
 """Apply text replacements to PowerPoint presentation.
 
 Usage:
-    python replace.py <input.pptx> <replacements.json> <output.pptx>
+    uv run replace.py <input.pptx> <replacements.json> <output.pptx>
 
 The replacements JSON should have the structure output by inventory.py.
 ALL text shapes identified by inventory.py will have their text cleared
@@ -14,6 +18,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from inventory import InventoryData, extract_text_inventory
 from pptx import Presentation
 from pptx.dml.color import RGBColor
