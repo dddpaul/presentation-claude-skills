@@ -1,9 +1,11 @@
 ---
 id: TASK-4
 title: Create Kafka architecture presentation using pptx-new skill
-status: To Do
-assignee: []
+status: Done
+assignee:
+  - '@claude'
 created_date: '2026-02-28 14:46'
+updated_date: '2026-02-28 14:54'
 labels: []
 dependencies: []
 ---
@@ -65,8 +67,16 @@ Two-column layout (50/50):
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Presentation has 3 slides covering Kafka architecture
-- [ ] #2 Slides include both text content and diagrams built with PptxGenJS shapes
-- [ ] #3 All Python scripts invoked via uv run
-- [ ] #4 Output .pptx file opens correctly
+- [x] #1 Presentation has 3 slides covering Kafka architecture
+- [x] #2 Slides include both text content and diagrams built with PptxGenJS shapes
+- [x] #3 All Python scripts invoked via uv run
+- [x] #4 Output .pptx file opens correctly
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Commit: `1a4367c` - task-4: Kafka architecture presentation with PptxGenJS
+
+Created 3-slide Kafka architecture PPTX using PptxGenJS shapes. Charcoal/teal palette. Slide 1: title, Slide 2: core architecture diagram (producers→brokers→consumers + KRaft), Slide 3: topics & partitions with offset visualization. Script runs via NODE_PATH with global pptxgenjs. Files: create-kafka-pptx.js, kafka-architecture.pptx
+<!-- SECTION:NOTES:END -->
