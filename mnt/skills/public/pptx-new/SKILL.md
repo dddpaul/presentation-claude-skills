@@ -10,7 +10,7 @@ license: Proprietary. LICENSE.txt has complete terms
 
 | Task | Guide |
 |------|-------|
-| Read/analyze content | `python -m markitdown presentation.pptx` |
+| Read/analyze content | `uv run --with "markitdown[pptx]" python -m markitdown presentation.pptx` |
 | Edit or create from template | Read [editing.md](editing.md) |
 | Create from scratch | Read [pptxgenjs.md](pptxgenjs.md) |
 
@@ -20,13 +20,13 @@ license: Proprietary. LICENSE.txt has complete terms
 
 ```bash
 # Text extraction
-python -m markitdown presentation.pptx
+uv run --with "markitdown[pptx]" python -m markitdown presentation.pptx
 
 # Visual overview
-python scripts/thumbnail.py presentation.pptx
+uv run scripts/thumbnail.py presentation.pptx
 
 # Raw XML
-python scripts/office/unpack.py presentation.pptx unpacked/
+uv run scripts/office/unpack.py presentation.pptx unpacked/
 ```
 
 ---
@@ -147,7 +147,7 @@ Your first render is almost never correct. Approach QA as a bug hunt, not a conf
 ### Content QA
 
 ```bash
-python -m markitdown output.pptx
+uv run --with "markitdown[pptx]" python -m markitdown output.pptx
 ```
 
 Check for missing content, typos, wrong order.
@@ -155,7 +155,7 @@ Check for missing content, typos, wrong order.
 **When using templates, check for leftover placeholder text:**
 
 ```bash
-python -m markitdown output.pptx | grep -iE "xxxx|lorem|ipsum|this.*(page|slide).*layout"
+uv run --with "markitdown[pptx]" python -m markitdown output.pptx | grep -iE "xxxx|lorem|ipsum|this.*(page|slide).*layout"
 ```
 
 If grep returns results, fix them before declaring success.
@@ -209,7 +209,7 @@ Report ALL issues found, including minor ones.
 Convert presentations to individual slide images for visual inspection:
 
 ```bash
-python scripts/office/soffice.py --headless --convert-to pdf output.pptx
+uv run scripts/office/soffice.py --headless --convert-to pdf output.pptx
 pdftoppm -jpeg -r 150 output.pdf slide
 ```
 
@@ -225,8 +225,18 @@ pdftoppm -jpeg -r 150 -f N -l N output.pdf slide-fixed
 
 ## Dependencies
 
-- `pip install "markitdown[pptx]"` - text extraction
-- `pip install Pillow` - thumbnail grids
-- `npm install -g pptxgenjs` - creating from scratch
-- LibreOffice (`soffice`) - PDF conversion (auto-configured for sandboxed environments via `scripts/office/soffice.py`)
-- Poppler (`pdftoppm`) - PDF to images
+### Python (managed via PEP 723 inline metadata)
+
+Python dependencies are declared in each script's inline metadata. Running any script with `uv run` automatically installs its dependencies in a cached virtual environment — no manual `pip install` needed.
+
+- **markitdown**: `uv run --with "markitdown[pptx]" python -m markitdown file.pptx`
+- **Pillow**, **defusedxml**, **lxml**: declared per-script, auto-installed by `uv run`
+
+### Node.js (global install)
+
+- **pptxgenjs**: `npm install -g pptxgenjs` (for creating presentations from scratch)
+
+### System tools
+
+- **LibreOffice**: `brew install libreoffice` / `sudo apt-get install libreoffice` (for PDF conversion, auto-configured for sandboxed environments via `scripts/office/soffice.py`)
+- **Poppler**: `brew install poppler` / `sudo apt-get install poppler-utils` (for pdftoppm)

@@ -1,8 +1,13 @@
+#!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["lxml", "defusedxml"]
+# ///
 """
 Command line tool to validate Office document XML files against XSD schemas and tracked changes.
 
 Usage:
-    python validate.py <path> [--original <original_file>] [--auto-repair] [--author NAME]
+    uv run validate.py <path> [--original <original_file>] [--auto-repair] [--author NAME]
 
 The first argument can be either:
 - An unpacked directory containing the Office document XML files
